@@ -1,0 +1,25 @@
+<h2>Manage Donors</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Blood Group</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+    {% for donor in donors %}
+    <tr>
+        <td>{{ donor[0] }}</td>
+        <td>{{ donor[1] }}</td>
+        <td>{{ donor[2] }}</td>
+        <td>{{ donor[3] }}</td>
+        <td>{{ donor[4] }}</td>
+        <td>
+            <form action="{{ url_for('delete_donor', id=donor[0]) }}" method="POST" class="delete-donor-form" style="display:inline;">
+                <button type="submit" class="delete">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,46 @@
+<div class="admin-management">
+    <h2>Manage Admins</h2>
+    
+    <!-- Add Admin Form -->
+    <div class="add-admin-form">
+        <h3>Add New Admin</h3>
+        <form id="add-admin-form" action="{{ url_for('add_admin') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Admin</button>
+        </form>
+    </div>
+    
+    <!-- Admins List -->
+    <div class="admins-list">
+        <h3>Existing Admins</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for admin in admins %}
+                <tr>
+                    <td>{{ admin[0] }}</td>
+                    <td>{{ admin[1] }}</td>
+                    <td>
+                        <form class="delete-admin-form" action="{{ url_for('delete_admin', id=admin[0]) }}" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

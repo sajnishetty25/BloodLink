@@ -1,0 +1,517 @@
+/* =================================================================== */
+/* 1. Base & Utilities */
+/* =================================================================== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif; /* Using Poppins or a similar modern font */
+    background-color: #f4f7f6; /* Light, soft background */
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Base colors */
+:root {
+    --color-primary: #e74c3c; /* Blood Red */
+    --color-secondary: #2c3e50; /* Dark Blue/Grey for sidebar */
+    --color-text: #34495e;
+    --color-success: #2ecc71;
+    --color-info: #3498db;
+    --color-warning: #f1c40f;
+    --color-border: #ecf0f1;
+}
+
+/* Alerts */
+.alert {
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.alert-error, .alert-danger { /* Using danger for consistency */
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+/* =================================================================== */
+/* 2. Dashboard Layout (Flexbox) */
+/* =================================================================== */
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Menu icon for mobile/sidebar toggle */
+.menu-icon {
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%; /* Circle icon */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+    display: none; /* Hide on desktop, show via media query */
+}
+
+.menu-icon:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Main Content Area */
+.content {
+    flex-grow: 1;
+    padding: 40px;
+    /* FIX: Correct margin-left to make space for the fixed sidebar */
+    margin-left: 250px; 
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* =================================================================== */
+/* 3. Sidebar Navigation */
+/* =================================================================== */
+
+.sidebar {
+    width: 250px;
+    background-color: var(--color-secondary);
+    color: white;
+    height: 100vh;
+    /* POSITION PROPERTIES FOR DESKTOP/FIXED VIEW (as in user's request) */
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    /* END POSITION PROPERTIES */
+    
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-text {
+    font-size: 1.8em;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin: 0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows links to push logout to bottom if needed */
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: background-color 0.2s, border-left 0.2s;
+    font-weight: 500;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: #34495e;
+    border-left: 5px solid var(--color-primary); /* Highlight active item */
+}
+
+.nav-item.active {
+    color: white;
+}
+
+.nav-item .material-icons {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.nav-item.logout {
+    margin-top: auto; /* Push logout to the bottom if there's extra space */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-warning);
+}
+
+.nav-item.logout:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-left: 5px solid white;
+}
+
+/* =================================================================== */
+/* 4. Content Sections & Cards */
+/* =================================================================== */
+
+.section-title {
+    color: var(--color-text);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    font-size: 2em;
+}
+
+.card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+.welcome-card {
+    border-left: 6px solid var(--color-primary);
+    padding: 25px 30px;
+}
+
+.card-title {
+    color: var(--color-text);
+    font-weight: 600;
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.card-subtitle {
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-top: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+/* --- Info Grid (Home Section) --- */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.info-block {
+    background: #fcfcfc;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s;
+}
+
+.info-block:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.info-label {
+    display: block;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.blood-group {
+    font-size: 2em;
+    color: var(--color-primary);
+}
+
+.next-eligible .info-value {
+    color: var(--color-info); /* Blue for the next key date */
+}
+
+/* =================================================================== */
+/* 5. Forms and Inputs */
+/* =================================================================== */
+
+.styled-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 5px;
+}
+
+.form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-size: 1em;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+    outline: none;
+}
+
+.form-textarea {
+    resize: vertical;
+}
+
+.form-info {
+    font-style: italic;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    color: var(--color-primary);
+    font-size: 0.9em;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.error-message::before {
+    content: '❗';
+    margin-right: 5px;
+}
+
+/* =================================================================== */
+/* 6. Buttons */
+/* =================================================================== */
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #c0392b;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--color-info);
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #2980b9;
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    color: white;
+}
+.btn-success:hover {
+    background-color: #27ae60;
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.4);
+}
+
+/* =================================================================== */
+/* 7. Tables */
+/* =================================================================== */
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate; /* Use separate for rounded corners */
+    border-spacing: 0;
+    font-size: 0.95em;
+}
+
+.data-table thead th {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 15px 10px;
+    text-align: left;
+    font-weight: 600;
+    border: none;
+}
+
+.data-table tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f0f0f0;
+    cursor: default;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.text-center {
+    text-align: center;
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+/* Receipt button style */
+.data-table .btn-receipt {
+    padding: 6px 12px;
+    font-size: 0.85em;
+    background-color: var(--color-info);
+}
+
+/* =================================================================== */
+/* 8. Media Queries (Mobile Responsiveness) - FIXED SIDEBAR */
+/* =================================================================== */
+
+/* For screens smaller than 768px (Tablets and Phones) */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+        transform: translateX(-250px); /* Hide sidebar by default */
+        /* --- RESTORE POSITION PROPERTIES FOR MOBILE TOGGLE --- */
+        position: fixed; 
+        left: 0;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out; /* Re-add transition for sliding */
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Show sidebar when active */
+    }
+
+    .menu-icon {
+        display: block; /* Show menu icon on mobile */
+    }
+
+    .content {
+        margin-left: 0; /* No margin on mobile */
+        padding: 20px;
+        width: 100%;
+    }
+
+    /* Adjust content shift for when the sidebar is open, though typically not needed */
+    .content.shifted {
+        margin-left: 0; /* Content doesn't shift, only the sidebar moves */
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr; /* Stack info blocks vertically */
+    }
+
+    .section-title {
+        font-size: 1.5em;
+    }
+}
+.sidebar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px; /* Increase horizontal padding */
+    gap: 12px; /* Space between icon and text */
+    white-space: nowrap; /* Prevent text wrapping */
+    font-size: 1em; /* Adjust font size if needed */
+}
+
+.sidebar-nav .nav-item span.material-icons {
+    min-width: 24px; /* Keep icons aligned */
+}
+
+.sidebar-nav .nav-item {
+    line-height: 1.6; /* More vertical spacing */
+}
+/* =================================================================== */
+/* 3. Sidebar Navigation (Focus on making space for Logout) */
+/* =================================================================== */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    /* This line is critical: it allows the sidebar-nav to take all vertical space */
+    flex-grow: 1; 
+}
+
+.nav-item.logout {
+    /* This line is critical: 'margin-top: auto' pushes the element to the bottom */
+    margin-top: 1000000px; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-warning);
+}
+/* --- Check these rules in your CSS file --- */
+
+.sidebar {
+    /* ... other styles ... */
+    display: flex; /* CRITICAL: Enables flex layout */
+    flex-direction: column; /* CRITICAL: Stacks items vertically */
+    height: 100vh;
+    /* ... other styles ... */
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* CRITICAL: Makes nav expand to fill the entire remaining height */
+}
+
+.nav-item.logout {
+    /* CRITICAL: Pushes the element to the bottom of its flex container (.sidebar-nav) */
+    margin-top: 325px; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-warning);
+}

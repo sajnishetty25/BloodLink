@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: -1;
+}
+
+.container {
+    max-width: 90vw;
+    width: 400px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    border: 3px solid #b30000;
+}
+
+h2 {
+    color: #b30000;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #b30000;
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #b30000, #ff0000);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(to right, #ff0000, #b30000);
+}
+
+.toggle-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.toggle-link a {
+    color: #ff0000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.offer {
+    background: #ffdddd;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: #b30000;
+    font-weight: bold;
+}
+
+.ad-banner {
+    background: #ffffcc;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: #3b3939;
+    font-weight: bold;
+}
+.success {
+    color: green;
+    font-weight: bold;
+}
+
+/* .messages p.error {
+    color: red;
+    font-weight: bold;
+} */

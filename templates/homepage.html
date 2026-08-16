@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BloodLink - Give the Gift of Life</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- AOS animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-3 text-white d-flex align-items-center" href="#">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="BloodLink Logo" height="45" class="me-2" />
+          BloodLink
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link mx-2" href="/dash/recipients">Requests</a></li>
+            <li class="nav-item"><a class="nav-link mx-2" href="/bloodbank/register">Register</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle mx-2" href="#" data-bs-toggle="dropdown">Login</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/admin/login">Admin Login</a></li>
+                <li><a class="dropdown-item" href="/bblogin">Blood Bank Login</a></li>
+                <li><a class="dropdown-item" href="/login">Donor Login</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="homepage-hero-section d-flex align-items-center text-center">
+      <div class="homepage-overlay"></div>
+      <div class="container position-relative text-white" data-aos="fade-up" data-aos-duration="1200">
+        <h1 class="display-2 fw-bold mb-3">Give the Gift of Life</h1>
+        <p class="lead mb-4">One act of kindness can save countless lives.</p>
+        <a href="/login" class="btn btn-lg btn-glow px-5 py-3">Become a Donor</a>
+      </div>
+    </header>
+
+    <!-- Features -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold" data-aos="fade-up">Why Donate with BloodLink?</h2>
+        <div class="row text-center g-4">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card p-4 h-100 shadow">
+              <div class="icon-circle bg-danger text-white mx-auto mb-3"><i class="fas fa-heartbeat fa-2x"></i></div>
+              <h5 class="fw-bold">Save Lives</h5>
+              <p class="text-muted">Your donation gives someone a second chance at life.</p>
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card p-4 h-100 shadow">
+              <div class="icon-circle bg-danger text-white mx-auto mb-3"><i class="fas fa-search-location fa-2x"></i></div>
+              <h5 class="fw-bold">Find Donors Easily</h5>
+              <p class="text-muted">Connect with nearby verified blood donors instantly.</p>
+            </div>
+          </div>
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card p-4 h-100 shadow">
+              <div class="icon-circle bg-danger text-white mx-auto mb-3"><i class="fas fa-hospital fa-2x"></i></div>
+              <h5 class="fw-bold">Manage Blood Banks</h5>
+              <p class="text-muted">Simplify stock management with our digital system.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white text-center py-4">
+      <div class="container">
+        <div class="mb-2">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+        </div>
+        <p class="m-0">&copy; 2025 BloodLink | All Rights Reserved</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+      // Make navbar solid on scroll
+      window.addEventListener("scroll", function() {
+        document.querySelector(".custom-navbar").classList.toggle("scrolled", window.scrollY > 50);
+      });
+    </script>
+  </body>
+</html>

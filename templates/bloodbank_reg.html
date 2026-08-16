@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Registration</title>
+    <link rel="icon" href="https://plotly.com/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/regis.css') }}">
+</head>
+<body>
+    <div class="registration-card">
+        <div class="registration-container">
+            <div class="form-header">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+                <h2>Blood Bank Registration</h2>
+            </div>
+            
+            <form action="/bloodbank/register" method="post" class="registration-form">
+                <div class="input-group">
+                    <label for="bloodbank">Blood Bank Name</label>
+                    <input type="text" id="bloodbank" name="bloodbank" placeholder="Enter blood bank name" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="govt-id">Government ID</label>
+                    <input type="text" id="govt-id" name="govt_id" placeholder="Enter government ID" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email address" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="contact">Contact Number</label>
+                    <input type="tel" id="contact" name="contact" placeholder="Enter contact number" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="Enter city" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required
+       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+       title="Password must be at least 8 characters long and alphanumeric">
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Request</button>
+                
+                <div class="form-footer">
+                    <p>Already have an account? <a href="/bblogin">Sign in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BloodLink</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li class="active"><a href="/admin/dash" id="blood-bank-requests">Blood Bank Requests</a></li>
+                <li><a href="#" id="manage-blood-banks">Manage Blood Banks</a></li>
+                <li><a href="#" id="manage-donors">Manage Donors</a></li>
+                <li><a href="#" id="manage-recipients">Manage Recipients</a></li>
+                <li><a href="#" id="manage-admins">Manage Admins</a></li>
+                <li><a href="{{ url_for('/homepage/') }}">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="content">
+            <h2>Blood Bank Requests</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Contact</th>
+                    <th>License No.</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for request in blood_bank_requests %}
+                <tr id="row-{{ request[0] }}">
+                    <td>{{ request[0] }}</td> <!-- ID -->
+                    <td>{{ request[1] }}</td> <!-- Name -->
+                    <td>{{ request[2] }}</td> <!-- Location -->
+                    <td>{{ request[3] }}</td> <!-- Contact -->
+                    <td>{{ request[4] }}</td> <!-- License No. -->
+                    <td class="status">{{ request[5] }}</td> <!-- Status -->
+                    <td>
+                        <a href="{{ url_for('view_blood_bank', id=request[0]) }}" class="view-btn">View Details</a>
+                        <button class="approve-btn" data-id="{{ request[0] }}">Approve</button>
+                        <button class="reject-btn" data-id="{{ request[0] }}">Reject</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        // ✅ Approve Blood Bank (AJAX)
+        $(document).on('click', '.approve-btn', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/admin/bloodbank/approve/' + id,
+                type: 'POST',
+                success: function(response) {
+                    alert(response.message);
+                    $('#row-' + id).find('.status').text('APPROVED'); // Update status
+                    $('#row-' + id).fadeOut(1000); // Remove row
+                },
+                error: function() {
+                    alert("Approval failed. Try again.");
+                }
+            });
+        });
+
+        // ✅ Reject Blood Bank (AJAX)
+        $(document).on('click', '.reject-btn', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/admin/bloodbank/reject/' + id,
+                type: 'POST',
+                success: function(response) {
+                    alert(response.message);
+                    $('#row-' + id).find('.status').text('REJECTED'); // Update status
+                    $('#row-' + id).fadeOut(1000); // Remove row
+                },
+                error: function() {
+                    alert("Rejection failed. Try again.");
+                }
+            });
+        });
+
+        // ✅ Load Approved Blood Banks via AJAX
+        $('#manage-blood-banks').click(function(event) {
+            event.preventDefault();
+            $.get('/admin/api/bloodbanks/approved', function(data) {
+                $('#content').html(data);
+            }).fail(function() {
+                alert("Failed to load approved blood banks.");
+            });
+        });
+
+        // ✅ Load Donors via AJAX
+        $('#manage-donors').click(function(event) {
+            event.preventDefault();
+            $.get('/admin/api/donors', function(data) {
+                $('#content').html(data);
+            }).fail(function() {
+                alert("Failed to load donors.");
+            });
+        });
+
+        // ✅ Load Admins via AJAX
+        $('#manage-admins').click(function(event) {
+            event.preventDefault();
+            $.get('/admin/api/admins', function(data) {
+                $('#content').html(data);
+            }).fail(function() {
+                alert("Failed to load admins.");
+            });
+        });
+
+        // ✅ Edit Blood Bank (AJAX)
+        $(document).on('submit', '.edit-form', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            $.post(form.attr('action'), form.serialize(), function(response) {
+                alert(response.message);
+                $('#manage-blood-banks').trigger('click'); // Reload list
+            }, 'json');
+        });
+
+        // ✅ Delete Blood Bank (AJAX)
+        $(document).on('submit', '.delete-form', function(e) {
+            e.preventDefault();
+            if (confirm("Are you sure you want to delete this blood bank?")) {
+                var form = $(this);
+                $.post(form.attr('action'), function(response) {
+                    alert(response.message);
+                    $('#manage-blood-banks').trigger('click'); // Reload list
+                }, 'json');
+            }
+        });
+
+        // ✅ Delete Donor (AJAX)
+        $(document).on('submit', '.delete-donor-form', function(e) {
+            e.preventDefault();
+            if (confirm("Are you sure you want to delete this donor?")) {
+                var form = $(this);
+                $.post(form.attr('action'), function(response) {
+                    alert(response.message);
+                    $('#manage-donors').trigger('click'); // Reload list
+                }, 'json');
+            }
+        });
+
+        // ✅ Add Admin (AJAX)
+        $(document).on('submit', '#add-admin-form', function(e) {
+            e.preventDefault();
+            var form = $(this);
+            $.post(form.attr('action'), form.serialize(), function(response) {
+                alert(response.message);
+                $('#manage-admins').trigger('click'); // Reload list
+            }, 'json');
+        });
+
+        // ✅ Delete Admin (AJAX)
+        $(document).on('submit', '.delete-admin-form', function(e) {
+            e.preventDefault();
+            if (confirm("Are you sure you want to delete this admin?")) {
+                var form = $(this);
+                $.post(form.attr('action'), function(response) {
+                    alert(response.message);
+                    $('#manage-admins').trigger('click'); // Reload list
+                }, 'json');
+            }
+        });
+    });
+    $('#manage-recipients').click(function(event) {
+        event.preventDefault();
+        $.get('/admin/api/recipients', function(data) {
+            $('#content').html(data);
+        }).fail(function() {
+            alert("Failed to load recipients");
+        });
+    });
+    
+    // Delete Recipient
+    $(document).on('click', '.btn-delete', function() {
+        if(confirm('Are you sure you want to delete this recipient?')) {
+            var recipientId = $(this).data('id');
+            $.ajax({
+                url: '/admin/api/recipients/delete/' + recipientId,
+                type: 'POST',
+                success: function(response) {
+                    if(response.success) {
+                        $('#recipient-row-' + recipientId).fadeOut(500, function() {
+                            $(this).remove();
+                        });
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Error: " + xhr.responseJSON.error);
+                }
+            });
+        }
+    });
+    
+    </script>
+
+</body>
+</html>

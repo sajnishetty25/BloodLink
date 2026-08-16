@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Blood Bank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_edit.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Edit Blood Bank</h2>
+        
+        <form id="edit-bloodbank-form">
+            <input type="hidden" name="id" value="{{ blood_bank[0] }}"> <!-- Hidden ID -->
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ blood_bank[1] }}" required>
+
+            <label for="city">Location (City):</label>
+            <input type="text" id="city" name="city" value="{{ blood_bank[2] }}" required>
+
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" value="{{ blood_bank[3] }}" required>
+
+            <label for="license_no">License No.:</label>
+            <input type="text" id="license_no" name="license_no" value="{{ blood_bank[4] }}" disabled> <!-- Non-editable -->
+
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" value="{{ blood_bank[5] }}" disabled> <!-- Non-editable -->
+
+            <button type="submit">Save Changes</button>
+            <a href="#" id="cancel-btn">Cancel</a>
+        </form>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        $("#edit-bloodbank-form").submit(function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "/admin/bloodbank/edit/" + $("input[name='id']").val(),
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    alert(response.message);
+                    window.location.href = "/admin/dash"; // Redirect to dashboard after update
+                },
+                error: function() {
+                    alert("Failed to update blood bank. Try again.");
+                }
+            });
+        });
+
+        $("#cancel-btn").click(function(event) {
+            event.preventDefault();
+            window.location.href = "/admin/dash"; // Redirect back to dashboard
+        });
+    });
+    </script>
+
+</body>
+</html>

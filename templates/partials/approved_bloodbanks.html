@@ -1,0 +1,26 @@
+<h2>Approved Blood Banks</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Contact</th>
+        <th>License No.</th>
+        <th>Actions</th>
+    </tr>
+    {% for bank in approved_bloodbanks %}
+    <tr>
+        <td>{{ bank[0] }}</td>
+        <td>{{ bank[1] }}</td>
+        <td>{{ bank[2] }}</td>
+        <td>{{ bank[3] }}</td>
+        <td>{{ bank[4] }}</td>
+        <td>
+            <a href="{{ url_for('edit_blood_bank', id=bank[0]) }}" class="edit-btn">Edit</a>
+            <form action="{{ url_for('delete_blood_bank', id=bank[0]) }}" method="POST" class="delete-form" style="display:inline;">
+                <button type="submit" class="delete">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

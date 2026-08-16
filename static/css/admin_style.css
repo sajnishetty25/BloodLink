@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container, .dashboard-container {
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+h2, h1 {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #c9302c;
+}
+
+.dashboard-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dashboard-menu a {
+    text-decoration: none;
+    background: #0275d8;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.dashboard-menu a:hover {
+    background: #025aa5;
+}

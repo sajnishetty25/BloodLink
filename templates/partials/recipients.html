@@ -1,0 +1,67 @@
+<!-- templates/partials/recipients.html -->
+<div class="recipients-container">
+    <h3>Manage Recipients</h3>
+    <table class="recipients-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Blood Group</th>
+                <th>Phone</th>
+                <th>Medical Condition</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipient in recipients %}
+            <tr id="recipient-row-{{ recipient.id }}">
+                <td>{{ recipient.id }}</td>
+                <td>{{ recipient.name }}</td>
+                <td>{{ recipient.email }}</td>
+                <td>{{ recipient.bloodgroup }}</td>
+                <td>{{ recipient.phone }}</td>
+                <td>{{ recipient.medical_condition }}</td>
+                <td>
+                    <button class="btn-edit" data-id="{{ recipient.id }}">Edit</button>
+                    <button class="btn-delete" data-id="{{ recipient.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+.recipients-container {
+    padding: 20px;
+}
+.recipients-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.recipients-table th, .recipients-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.recipients-table th {
+    background-color:rgb(249, 68, 68);
+}
+.btn-edit, .btn-delete {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+}
+.btn-edit {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+</style>

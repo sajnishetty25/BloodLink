@@ -1,0 +1,5 @@
+Flask
+pymysql
+Flask-MySQLdb
+dash
+dash-bootstrap-components

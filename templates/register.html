@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dash</title>
+    <link rel="icon" href="https://plotly.com/favicon.ico">
+    
+    <!-- Link to CSS file in Flask's static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="BloodLink Logo" class="logo">
+        <h2>Create an Account</h2>
+        
+        <!-- Display Flask messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} flash-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            {% for category, message in messages %}
+                {% if category == 'success' %} 
+                    setTimeout(function() {
+                        window.location.href = "{{ url_for('login') }}";
+                    }, 2000); // Redirect to dashboard after 2 seconds
+                {% endif %}
+            {% endfor %}
+        </script>
+    {% endif %}
+{% endwith %}
+
+        <form action="{{ url_for('register') }}" method="post">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <select name="bloodgroup" required>
+                <option value="" disabled selected>Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </select>
+            <select name="gender" required>
+                <option value="" disabled selected>Gender</option>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
+            </select>
+            
+            <input type="text" id="dob" name="dob" placeholder="Select Date of Birth" required>
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            <input type="password" id="password" name="password" placeholder="Password" required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Password must be at least 8 characters long and include:
+                   - 1 uppercase letter
+                   - 1 lowercase letter
+                   - 1 number
+                   - 1 special character (@$!%*?&)">
+       
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+    </div>
+
+    <!-- Flatpickr initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#dob', {
+                dateFormat: 'Y-m-d', // Format: YYYY-MM-DD
+                maxDate: 'today',     // Prevent future dates
+                altInput: true,
+                altFormat: 'F j, Y',  // Display format: "Month Day, Year"
+            });
+        });
+    </script>
+
+    <style>
+        .flash-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .flash-message {
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            width: 300px;
+        }
+        .alert-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .alert-error {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#dob', {
+                dateFormat: 'Y-m-d',
+                maxDate: 'today',
+                altInput: true,
+                altFormat: 'F j, Y',
+            });
+    
+            // Form validation for age
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(event) {
+                const dob = new Date(document.getElementById('dob').value);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const m = today.getMonth() - dob.getMonth();
+    
+                if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+    
+                if (age < 20) { // Change to 21 if you want
+                    event.preventDefault(); // Stop form submission
+                    alert("You must be at least 20 years old to register.");
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

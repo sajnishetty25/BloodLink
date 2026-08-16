@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>BloodFlow Donor Dashboard</title>
+    <link rel="icon" href="https://plotly.com/favicon.ico">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="menu-icon" onclick="toggleSidebar()">
+            <span class="material-icons">menu</span>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>Donor Dashboard</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item" onclick="showSection('home')">
+                    <span class="material-icons">home</span> Home
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('history'); loadDonationHistory()">
+                    <span class="material-icons">history_toggle_off</span> Donation History
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('appointment')">
+                    <span class="material-icons">calendar_month</span> Book Appointment
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('booked_appointments'); loadBookedAppointments()">
+                    <span class="material-icons">assignment</span> Booked Appointments
+                </a>
+                <a href="{{ url_for('login') }}" class="nav-item logout">
+                    <span class="material-icons">logout</span> Logout
+                </a>
+            </nav>
+        </div>
+
+        <main class="content" id="content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>

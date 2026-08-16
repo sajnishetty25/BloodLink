@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <style>
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .details p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .approve, .reject {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .approve {
+            background-color: green;
+        }
+        .reject {
+            background-color: red;
+        }
+        .approve:hover {
+            background-color: darkgreen;
+        }
+        .reject:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Blood Bank Details</h2>
+        
+        <div class="details">
+            <br><br><br>
+            <p><strong>ID:</strong> {{ details[0] }}</p>
+            <p><strong>Name:</strong> {{ details[1] }}</p>
+            <p><strong>Location:</strong> {{ details[2] }}</p>
+            <p><strong>Contact:</strong> {{ details[3] }}</p>
+            <p><strong>License No.:</strong> {{ details[4] }}</p>
+            <p><strong>Status:</strong> {{ details[5] }}</p>
+
+            <div class="actions">
+                <form action="{{ url_for('approve_blood_bank', id=details[0]) }}" method="POST" style="display:inline;">
+                    <br><br>
+                    <button type="submit" class="approve">Approve</button>
+                </form>
+                
+                <form action="{{ url_for('reject_blood_bank', id=details[0]) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="reject">Reject</button>
+                </form>
+            </div>
+        </div>
+     
+        
+    </div>
+
+</body>
+</html>

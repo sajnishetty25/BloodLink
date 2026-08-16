@@ -1,0 +1,30 @@
+<h2>Pending Blood Bank Requests</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Contact</th>
+        <th>License No.</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for request in blood_bank_requests %}
+    <tr>
+        <td>{{ request[0] }}</td>
+        <td>{{ request[1] }}</td>
+        <td>{{ request[2] }}</td>
+        <td>{{ request[3] }}</td>
+        <td>{{ request[4] }}</td>
+        <td>{{ request[5] }}</td>
+        <td>
+            <form action="{{ url_for('approve_blood_bank', id=request[0]) }}" method="POST" class="approve-form">
+                <button type="submit" class="approve">Approve</button>
+            </form>
+            <form action="{{ url_for('reject_blood_bank', id=request[0]) }}" method="POST" class="reject-form">
+                <button type="submit" class="reject">Reject</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
