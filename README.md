@@ -68,7 +68,7 @@ Key objectives include:
 ## Contact Information
 For any queries or contributions, contact:  
 
-**Email:** [priteshshettty89@gmail.com](mailto:priteshshettty89@gmail.com)  
+**Email:** [sajnishetty12@gmail.com](mailto:sajnishetty12@gmail.com)  
 
 ---
 
